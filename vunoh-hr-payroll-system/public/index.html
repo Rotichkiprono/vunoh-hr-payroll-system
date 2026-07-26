@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vunoh HR & Payroll</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1>Vunoh HR Dashboard</h1>
+        <div class="nav-links">
+            <button onclick="showSection('employees')">Employees</button>
+            <button onclick="showSection('leave')">Leave Management</button>
+            <button onclick="showSection('payroll')">Payroll</button>
+        </div>
+    </nav>
+
+    <main id="app-content">
+        <!-- Employees Section -->
+        <section id="employees" class="view-section active">
+            <h2>Active Employees</h2>
+            <div id="employees-list" class="card-grid">
+                <p class="empty-state">Loading employees...</p>
+            </div>
+        </section>
+
+        <!-- Leave Management Section -->
+        <section id="leave" class="view-section">
+            <h2>Leave Management</h2>
+            <div class="grid-2">
+                <div class="card form-card">
+                    <h3>Request Leave</h3>
+                    <form id="leave-form">
+                        <label>Employee (Simulated Login):</label>
+                        <select id="leave-employee-id" required></select>
+                        <label>Start Date:</label>
+                        <input type="date" id="leave-start" required>
+                        <label>End Date:</label>
+                        <input type="date" id="leave-end" required>
+                        <label>Type:</label>
+                        <select id="leave-type">
+                            <option value="Paid">Paid</option>
+                            <option value="Unpaid">Unpaid</option>
+                        </select>
+                        <button type="submit" id="submit-leave-btn">Submit Request</button>
+                    </form>
+                    <p id="leave-message" class="status-msg"></p>
+                </div>
+                <div>
+                    <h3>Pending Approvals</h3>
+                    <div id="leave-requests-list">
+                        <p class="empty-state">Loading requests...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payroll Section -->
+        <section id="payroll" class="view-section">
+            <h2>Payroll Processing</h2>
+            <div class="card form-card">
+                <h3>Generate Payroll</h3>
+                <form id="payroll-form" class="inline-form">
+                    <input type="number" id="payroll-month" placeholder="Month (1-12)" min="1" max="12" required>
+                    <input type="number" id="payroll-year" placeholder="Year (e.g. 2026)" required>
+                    <button type="submit" id="generate-payroll-btn">Run Payroll</button>
+                </form>
+                <p id="payroll-message" class="status-msg"></p>
+            </div>
+
+            <h3>Payslips</h3>
+            <form id="fetch-payroll-form" class="inline-form">
+                <input type="number" id="fetch-month" placeholder="Month" required>
+                <input type="number" id="fetch-year" placeholder="Year" required>
+                <button type="submit">View Payslips</button>
+            </form>
+            <div id="payroll-list" class="card-grid mt-2">
+                <p class="empty-state">Select a period to view payslips.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

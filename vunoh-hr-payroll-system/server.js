@@ -7,14 +7,18 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Allows Express to parse JSON bodies from frontend requests
+app.use(express.json());
+
+// Import Routes
+const employeeRoutes = require('./routes/employeeRoutes');
+
+// Mount Routes
+app.use('/api/employees', employeeRoutes);
 
 // Health Check Route
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'Vunoh HR & Payroll API is running cleanly.' });
 });
-
-// We will mount our HR, Leave, and Payroll routes here in the next steps
 
 // Start Server
 const PORT = process.env.PORT || 3000;

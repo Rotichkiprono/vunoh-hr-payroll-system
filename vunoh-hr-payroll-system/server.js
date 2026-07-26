@@ -12,10 +12,12 @@ app.use(express.json());
 // Import Routes
 const employeeRoutes = require('./routes/employeeRoutes');
 const leaveRoutes = require('./routes/leaveRoutes'); 
+const payrollRoutes = require('./routes/payrollRoutes');
 
 // Mount Routes
 app.use('/api/employees', employeeRoutes);
 app.use('/api/leave', leaveRoutes); 
+app.use('/api/payroll', payrollRoutes);
 
 // Health Check Route
 app.get('/api/health', (req, res) => {

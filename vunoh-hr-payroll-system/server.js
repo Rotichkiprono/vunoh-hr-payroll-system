@@ -1,5 +1,6 @@
 // server.js
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -12,16 +13,22 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json());
-app.use(express.static('public'));
+// Serve static frontend files using absolute path resolution
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Fallback route to serve index.html for root and SPA requests
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Import Routes
 const employeeRoutes = require('./routes/employeeRoutes');
-const leaveRoutes = require('./routes/leaveRoutes'); 
+const leaveRoutes = require('./routes/leaveRoutes');
 const payrollRoutes = require('./routes/payrollRoutes');
 
 // Mount Routes
 app.use('/api/employees', employeeRoutes);
-app.use('/api/leave', leaveRoutes); 
+app.use('/api/leave', leaveRoutes);
 app.use('/api/payroll', payrollRoutes);
 
 // Health Check Route
@@ -29,10 +36,7 @@ app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'Vunoh HR & Payroll API is running cleanly.' });
 });
 
-// Serve static frontend files from 'public'
-app.use(express.static('public'));
-
-// Only start local listener when NOT on Vercel
+// Server listener (local development)
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
@@ -40,5 +44,4 @@ if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     });
 }
 
-// Export app instance for Vercel serverless execution
 module.exports = app;
